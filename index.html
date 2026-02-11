@@ -1,0 +1,768 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Healthcare AI Environmental Impact Simulator&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Tailwind CSS for styling --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Chart.js for visualizations --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.jsdelivr.net/npm/chart.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Font Awesome for Icons --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Google Fonts: Inter --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Inter', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #F8F9FB; /* Light grey background */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #1F2937;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Custom Range Slider Styling */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>input[type=range] {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>-webkit-appearance: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: transparent;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>input[type=range]::-webkit-slider-thumb {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>-webkit-appearance: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: #ffffff;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 2px solid #E5E7EB;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 2px 4px rgba(0,0,0,0.1);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: -8px;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>input[type=range]::-webkit-slider-runnable-track {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 6px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: #E5E7EB;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 3px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Specific Color Classes from Image */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.text-header-blue { color: #4F46E5; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.bg-header-icon { background-color: #4F46E5; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.text-score-red { color: #DC2626; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.text-score-orange { color: #EA580C; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.text-score-green { color: #16A34A; }</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Card Shadow */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.card-shadow {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Chart Containers */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.chart-container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 200px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Modal Transitions */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: opacity 0.25s ease;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body.modal-active {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>overflow-x: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>overflow-y: visible !important;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Wizard Selection Cards */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.wizard-option {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 2px solid #E5E7EB;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: all 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.wizard-option:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-color: #4F46E5;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #EEF2FF;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.wizard-option.selected {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-color: #4F46E5;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #EEF2FF;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.wizard-option.selected::after {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>content: '\f00c';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Font Awesome 5 Free';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 900;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>top: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>right: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #4F46E5;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="p-4 md:p-8"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Header Section --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;header class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h4 class="text-xs font-bold text-header-blue uppercase tracking-wider mb-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;i class="fas fa-shield-alt mr-1"&gt;&lt;/i&gt; Compliance &amp; ESG Dashboard</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h1 class="text-3xl font-extrabold text-gray-900 tracking-tight"&gt;Healthcare AI Environmental Impact Simulator&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-gray-500 mt-1 text-sm font-medium"&gt;Reporting environmental impact through NIST, AHIMA, and ESG Frameworks.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Impact Score Card --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="bg-white rounded-xl px-6 py-3 flex items-center gap-6 card-shadow border border-gray-100"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="text-right"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-0.5"&gt;Impact Score (0-100)&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex items-baseline justify-end gap-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span id="scoreValue" class="text-4xl font-black text-score-red"&gt;85.8&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span id="scoreLabel" class="text-xs font-bold bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded uppercase"&gt;High&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="bg-header-icon h-12 w-12 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-200"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;i class="fas fa-wave-square text-white text-xl"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Main Grid --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="grid grid-cols-1 lg:grid-cols-12 gap-6"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Left Sidebar (Controls) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="lg:col-span-4 space-y-6"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Model Config Card --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="bg-white rounded-2xl p-6 card-shadow border border-gray-100"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex items-center justify-between mb-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex items-center gap-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;i class="fas fa-microchip text-gray-400"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h2 class="text-lg font-bold text-gray-900"&gt;Model Configuration&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;!-- Wizard Button --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button onclick="toggleModal('wizardModal')" class="text-xs bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold py-1.5 px-3 rounded-lg transition-colors border border-indigo-100"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;i class="fas fa-magic mr-1"&gt;&lt;/i&gt; Auto-Set</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Dropdown --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="mb-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2"&gt;Architecture Profile&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="relative"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;select id="modelSelect" class="block appearance-none w-full bg-gray-100 border border-transparent text-gray-700 font-semibold py-2.5 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:bg-white focus:border-gray-300 transition-colors cursor-pointer text-sm"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;option value="VizAI"&gt;Viz AI (Neuro/Vascular)&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;option value="RapidAI"&gt;Rapid AI (Imaging)&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;option value="Abridge"&gt;Abridge (Ambient)&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;option value="NuanceDAX"&gt;Nuance DAX (Ambient)&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;option value="NuancePS"&gt;Nuance Powerscribe&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;option value="NuanceDragon"&gt;Nuance Dragon (DAX Copilot)&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;option value="Fluency"&gt;Fluency (Documentation)&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;option value="RadAI"&gt;Rad AI (Generative)&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;option value="Custom"&gt;Custom Architecture&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"&gt;&lt;path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Parameter Slider --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="mb-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex justify-between items-end mb-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"&gt;Parameter Count&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span id="paramLabel" class="text-sm font-bold text-header-blue"&gt;7B&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;!-- Range increased to 100,000 (100B) to accommodate LLMs --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="range" id="paramSlider" min="10" max="100000" step="10" value="7000" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Duty Cycle Slider --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="mb-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex justify-between items-end mb-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"&gt;Duty Cycle (Usage/Mo)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span id="dutyLabel" class="text-sm font-bold text-header-blue"&gt;10,000&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="range" id="dutySlider" min="1000" max="100000" step="1000" value="10000" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- PUE Controls --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="mb-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2"&gt;Facility Efficiency (PUE)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="grid grid-cols-3 gap-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button onclick="updatePUE(1.1, this)" class="pue-btn py-2 px-2 rounded-lg border border-gray-200 text-xs font-bold text-gray-500 hover:bg-gray-50 transition-colors"&gt;Low&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button onclick="updatePUE(1.5, this)" class="pue-btn py-2 px-2 rounded-lg border border-transparent bg-header-blue text-white text-xs font-bold shadow-md ring-2 ring-indigo-100 bg-indigo-600"&gt;Medium&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button onclick="updatePUE(2.0, this)" class="pue-btn py-2 px-2 rounded-lg border border-gray-200 text-xs font-bold text-gray-500 hover:bg-gray-50 transition-colors"&gt;High&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Governance Alignment Card --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="bg-white rounded-2xl p-6 card-shadow border border-gray-100"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex items-center gap-2 mb-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;i class="fas fa-check-square text-header-blue"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h2 class="text-lg font-bold text-gray-900"&gt;Governance Alignment&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;!-- Item 1 --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-gray-50 p-3 rounded-lg border border-gray-100"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex justify-between items-start mb-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="text-[10px] font-bold text-gray-400 uppercase"&gt;NIST AI RMF&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span id="nistTag" class="text-[10px] font-bold bg-orange-100 text-orange-600 px-2 py-0.5 rounded uppercase"&gt;High Risk Tier&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-xs text-gray-600 font-medium leading-tight"&gt;NIST AI RMF: Manage Function mitigation thresholds.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;!-- Item 2 --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-gray-50 p-3 rounded-lg border border-gray-100"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex justify-between items-start mb-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="text-[10px] font-bold text-gray-400 uppercase"&gt;AHIMA Governance&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="text-[10px] font-bold bg-amber-100 text-amber-600 px-2 py-0.5 rounded uppercase"&gt;Review Required&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-xs text-gray-600 font-medium leading-tight"&gt;AHIMA: Data stewardship sustainability audit.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;!-- Item 3 --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-gray-50 p-3 rounded-lg border border-gray-100"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex justify-between items-start mb-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="text-[10px] font-bold text-gray-400 uppercase"&gt;ESG Reporting&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span id="esgTag" class="text-[10px] font-bold bg-red-100 text-red-600 px-2 py-0.5 rounded uppercase"&gt;Materiality Risk&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-xs text-gray-600 font-medium leading-tight"&gt;ESG: Greenhouse Gas Protocol Scope 2/3.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Right Content Area --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="lg:col-span-8 flex flex-col gap-6"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- KPI Cards --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="grid grid-cols-1 md:grid-cols-3 gap-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Energy --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white rounded-2xl p-6 card-shadow border border-gray-100 relative overflow-hidden group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                         </span>&lt;i class="fas fa-bolt text-5xl text-blue-600"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-1 flex items-center gap-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;i class="fas fa-bolt"&gt;&lt;/i&gt; Energy</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex items-baseline gap-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span id="kpiEnergy" class="text-4xl font-extrabold text-gray-900"&gt;217.3&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="text-sm font-bold text-gray-400"&gt;kWh&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Carbon --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white rounded-2xl p-6 card-shadow border border-gray-100 relative overflow-hidden group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                         </span>&lt;i class="fas fa-smog text-5xl text-orange-600"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="text-[10px] font-bold text-orange-500 uppercase tracking-widest mb-1 flex items-center gap-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;i class="fas fa-wind"&gt;&lt;/i&gt; Carbon</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex items-baseline gap-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span id="kpiCarbon" class="text-4xl font-extrabold text-gray-900"&gt;86.9&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="text-sm font-bold text-gray-400"&gt;kg&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Water --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white rounded-2xl p-6 card-shadow border border-gray-100 relative overflow-hidden group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                         </span>&lt;i class="fas fa-tint text-5xl text-teal-600"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="text-[10px] font-bold text-teal-500 uppercase tracking-widest mb-1 flex items-center gap-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;i class="fas fa-tint"&gt;&lt;/i&gt; Water</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex items-baseline gap-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span id="kpiWater" class="text-4xl font-extrabold text-gray-900"&gt;121.7&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="text-sm font-bold text-gray-400"&gt;L&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Charts Section --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="grid grid-cols-1 md:grid-cols-2 gap-6 h-full"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Bar Chart --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white rounded-2xl p-6 card-shadow border border-gray-100 flex flex-col"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex items-center gap-2 mb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;i class="fas fa-chart-bar text-header-blue"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="text-sm font-bold text-gray-900"&gt;Footprint vs. Target Benchmarks&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="chart-container flex-grow"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;canvas id="barChart"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Radar Chart --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white rounded-2xl p-6 card-shadow border border-gray-100 flex flex-col"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex items-center gap-2 mb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;i class="fas fa-bullseye text-green-600"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="text-sm font-bold text-gray-900"&gt;Architecture Ecology Profile&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="chart-container flex-grow"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;canvas id="radarChart"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Footer Stats (Black Box) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="bg-[#0F172A] rounded-2xl p-8 card-shadow text-white grid grid-cols-1 md:grid-cols-3 gap-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Driven Miles --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex flex-col items-center text-center border-b md:border-b-0 md:border-r border-gray-800 pb-6 md:pb-0 md:pr-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;i class="fas fa-car text-blue-400 text-2xl mb-3"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span id="statMiles" class="text-3xl font-black tracking-tight mb-1"&gt;223&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"&gt;Driven Miles&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Phone Charges --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex flex-col items-center text-center border-b md:border-b-0 md:border-r border-gray-800 pb-6 md:pb-0 md:pr-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;i class="fas fa-mobile-alt text-amber-400 text-2xl mb-3"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span id="statPhones" class="text-3xl font-black tracking-tight mb-1"&gt;18,108&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"&gt;Phone Charges&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Trees Needed --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex flex-col items-center text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;i class="fas fa-tree text-green-400 text-2xl mb-3"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span id="statTrees" class="text-3xl font-black tracking-tight mb-1"&gt;54.3&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest"&gt;Trees Needed&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- WIZARD MODAL --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="wizardModal" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"&gt;&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="modal-container bg-white w-11/12 md:max-w-2xl mx-auto rounded-xl shadow-2xl z-50 overflow-y-auto max-h-screen"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Header --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="modal-content py-4 text-left px-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex justify-between items-center pb-3 border-b border-gray-200"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex items-center gap-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="bg-indigo-100 p-2 rounded-lg text-indigo-600"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;i class="fas fa-magic text-xl"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-xl font-bold text-gray-800"&gt;Auto-Configure Simulation&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-xs text-gray-500"&gt;Answer 3 questions to estimate your AI footprint.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="cursor-pointer z-50" onclick="toggleModal('wizardModal')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;i class="fas fa-times text-gray-500 hover:text-gray-700"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Wizard Steps --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="my-5 space-y-6"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;!-- Q1: Function --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-sm font-bold text-gray-700 uppercase tracking-wide mb-3"&gt;1. Is this imaging AI, documentation AI, or generative AI?&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="grid grid-cols-1 md:grid-cols-3 gap-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="wizard-option p-3 rounded-lg border-2 border-gray-200 text-center hover:border-indigo-500 hover:bg-indigo-50" onclick="selectOption('func', 'imaging', this)"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;i class="fas fa-x-ray text-2xl text-gray-400 mb-2 block"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-sm font-bold text-gray-700"&gt;Imaging AI&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="wizard-option p-3 rounded-lg border-2 border-gray-200 text-center hover:border-indigo-500 hover:bg-indigo-50" onclick="selectOption('func', 'doc', this)"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;i class="fas fa-file-medical-alt text-2xl text-gray-400 mb-2 block"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-sm font-bold text-gray-700"&gt;Documentation&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="wizard-option p-3 rounded-lg border-2 border-gray-200 text-center hover:border-indigo-500 hover:bg-indigo-50" onclick="selectOption('func', 'gen', this)"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;i class="fas fa-brain text-2xl text-gray-400 mb-2 block"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-sm font-bold text-gray-700"&gt;Generative AI&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;!-- Q2: Scale --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-sm font-bold text-gray-700 uppercase tracking-wide mb-3"&gt;2. Is this department-level or enterprise-wide?&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="grid grid-cols-2 gap-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="wizard-option p-3 rounded-lg border-2 border-gray-200 text-center hover:border-indigo-500 hover:bg-indigo-50" onclick="selectOption('scale', 'dept', this)"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;i class="fas fa-building text-2xl text-gray-400 mb-2 block"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-sm font-bold text-gray-700"&gt;Department Level&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-xs text-gray-500 block"&gt;~5,000 calls/mo&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="wizard-option p-3 rounded-lg border-2 border-gray-200 text-center hover:border-indigo-500 hover:bg-indigo-50" onclick="selectOption('scale', 'ent', this)"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;i class="fas fa-city text-2xl text-gray-400 mb-2 block"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-sm font-bold text-gray-700"&gt;Enterprise Wide&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-xs text-gray-500 block"&gt;~50,000+ calls/mo&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;!-- Q3: Model Type --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-sm font-bold text-gray-700 uppercase tracking-wide mb-3"&gt;3. Is the vendor using foundation models or task-specific models?&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="grid grid-cols-2 gap-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="wizard-option p-3 rounded-lg border-2 border-gray-200 text-center hover:border-indigo-500 hover:bg-indigo-50" onclick="selectOption('type', 'task', this)"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;i class="fas fa-tools text-2xl text-gray-400 mb-2 block"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-sm font-bold text-gray-700"&gt;Task-Specific&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-xs text-gray-500 block"&gt;Optimized, Smaller&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="wizard-option p-3 rounded-lg border-2 border-gray-200 text-center hover:border-indigo-500 hover:bg-indigo-50" onclick="selectOption('type', 'foundation', this)"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;i class="fas fa-network-wired text-2xl text-gray-400 mb-2 block"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-sm font-bold text-gray-700"&gt;Foundation Model&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-xs text-gray-500 block"&gt;Large, General Purpose&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Footer --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex justify-end pt-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg mr-2 font-semibold text-sm hover:bg-gray-300" onclick="toggleModal('wizardModal')"&gt;Cancel&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button class="px-6 py-2 bg-indigo-600 text-white rounded-lg font-bold text-sm hover:bg-indigo-700 shadow-lg" onclick="applyWizard()"&gt;Apply Configuration&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Logic Script --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Constants for Calculations</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Energy per parameter per inference (kWh/M-params)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const ENERGY_CONST = 0.000018;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const CARBON_INTENSITY = 0.4; // kg CO2 per kWh (Average Grid)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const WATER_INTENSITY = 0.56; // L per kWh (Direct + Indirect)</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// State Variables</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let state = {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>params: 7000, // Millions (Default 7B)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>dutyCycle: 10000,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>pue: 1.5</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Wizard State</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let wizardState = {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>func: null,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>scale: null,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>type: null</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// DOM Elements</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const els = {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>paramSlider: document.getElementById('paramSlider'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>dutySlider: document.getElementById('dutySlider'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>modelSelect: document.getElementById('modelSelect'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>paramLabel: document.getElementById('paramLabel'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>dutyLabel: document.getElementById('dutyLabel'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>kpiEnergy: document.getElementById('kpiEnergy'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>kpiCarbon: document.getElementById('kpiCarbon'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>kpiWater: document.getElementById('kpiWater'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>statMiles: document.getElementById('statMiles'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>statPhones: document.getElementById('statPhones'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>statTrees: document.getElementById('statTrees'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>scoreValue: document.getElementById('scoreValue'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>scoreLabel: document.getElementById('scoreLabel'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>nistTag: document.getElementById('nistTag'),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>esgTag: document.getElementById('esgTag')</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Chart Instances</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let barChart, radarChart;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Helper: Format Parameters</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function formatParams(val) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (val &gt;= 1000) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return (val / 1000).toFixed(1).replace(/\.0$/, '') + "B";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return val + "M";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Initialize Charts</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function initCharts() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Bar Chart</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const ctxBar = document.getElementById('barChart').getContext('2d');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>barChart = new Chart(ctxBar, {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>type: 'bar',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>data: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>labels: ['Energy (kWh)', 'Carbon (kg)', 'Water (L)'],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>datasets: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>label: 'Current Model',</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>data: [0, 0, 0],</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>backgroundColor: ['#4F46E5', '#4F46E5', '#4F46E5'], // Blue</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>borderRadius: 6,</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>barPercentage: 0.6</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>label: 'Sustainable Benchmark',</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>data: [500, 200, 300], // Increased benchmark for LLM scale</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>backgroundColor: '#E5E7EB',</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>borderRadius: 6,</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>barPercentage: 0.6,</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>grouped: true</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>options: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>responsive: true,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>maintainAspectRatio: false,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>plugins: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>legend: { display: false }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>scales: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>y: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>beginAtZero: true,</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>grid: { display: false }</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>x: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>grid: { display: false }</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Radar Chart</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const ctxRadar = document.getElementById('radarChart').getContext('2d');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>radarChart = new Chart(ctxRadar, {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>type: 'radar',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>data: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>labels: ['Energy', 'Carbon', 'Water', 'Model Scale'],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>datasets: [{</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>label: 'Ecology Profile',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>data: [50, 50, 50, 50],</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>fill: true,</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>backgroundColor: 'rgba(52, 211, 153, 0.5)', // Green opacity</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>borderColor: '#10B981', // Green solid</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>pointBackgroundColor: '#10B981',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>pointBorderColor: '#fff',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>pointHoverBackgroundColor: '#fff',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>pointHoverBorderColor: '#10B981'</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}]</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>options: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>responsive: true,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>maintainAspectRatio: false,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>plugins: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>legend: { display: false }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>scales: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>r: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>angleLines: { color: '#E5E7EB' },</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>grid: { color: '#F3F4F6' },</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>pointLabels: {</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>font: { size: 10, weight: 'bold' },</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>color: '#6B7280'</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>ticks: { display: false, max: 100 }</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Calculation Logic</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function calculate() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Energy Calculation</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const rawEnergy = (state.params * state.dutyCycle * ENERGY_CONST * state.pue);<span class="Apple-converted-space"> </span></p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const carbon = rawEnergy * CARBON_INTENSITY;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const water = rawEnergy * WATER_INTENSITY;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Update KPIs</p>
+<p class="p1"><span class="Apple-converted-space">            </span>els.kpiEnergy.innerText = rawEnergy.toFixed(1);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>els.kpiCarbon.innerText = carbon.toFixed(1);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>els.kpiWater.innerText = water.toFixed(1);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Update Footer Stats</p>
+<p class="p1"><span class="Apple-converted-space">            </span>els.statMiles.innerText = Math.round(carbon * 2.56).toLocaleString();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>els.statPhones.innerText = Math.round(rawEnergy * 83.3).toLocaleString();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>els.statTrees.innerText = (carbon * 0.625).toFixed(1);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Update Impact Score (Normalized for view)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Carbon &gt; 500 is high risk for this dashboard view</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let score = (carbon / 500) * 100;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (score &gt; 99.9) score = 99.9;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (score &lt; 1) score = 1;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>els.scoreValue.innerText = score.toFixed(1);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Update Score Styling</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const scoreEl = els.scoreValue;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const labelEl = els.scoreLabel;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const tagNist = els.nistTag;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const tagEsg = els.esgTag;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (score &gt; 75) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// High Risk</p>
+<p class="p1"><span class="Apple-converted-space">                </span>scoreEl.className = "text-4xl font-black text-score-red";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>labelEl.className = "text-xs font-bold bg-red-100 text-red-600 px-1.5 py-0.5 rounded uppercase";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>labelEl.innerText = "High";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>tagNist.className = "text-[10px] font-bold bg-orange-100 text-orange-600 px-2 py-0.5 rounded uppercase";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>tagNist.innerText = "High Risk Tier";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>tagEsg.className = "text-[10px] font-bold bg-red-100 text-red-600 px-2 py-0.5 rounded uppercase";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>tagEsg.innerText = "Materiality Risk";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else if (score &gt; 40) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Medium Risk</p>
+<p class="p1"><span class="Apple-converted-space">                </span>scoreEl.className = "text-4xl font-black text-score-orange";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>labelEl.className = "text-xs font-bold bg-orange-100 text-orange-600 px-1.5 py-0.5 rounded uppercase";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>labelEl.innerText = "Med";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>tagNist.className = "text-[10px] font-bold bg-amber-100 text-amber-600 px-2 py-0.5 rounded uppercase";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>tagNist.innerText = "Audit Needed";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>tagEsg.className = "text-[10px] font-bold bg-amber-100 text-amber-600 px-2 py-0.5 rounded uppercase";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>tagEsg.innerText = "Review";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Low Risk</p>
+<p class="p1"><span class="Apple-converted-space">                </span>scoreEl.className = "text-4xl font-black text-score-green";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>labelEl.className = "text-xs font-bold bg-green-100 text-green-600 px-1.5 py-0.5 rounded uppercase";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>labelEl.innerText = "Low";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>tagNist.className = "text-[10px] font-bold bg-green-100 text-green-600 px-2 py-0.5 rounded uppercase";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>tagNist.innerText = "Compliant";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>tagEsg.className = "text-[10px] font-bold bg-green-100 text-green-600 px-2 py-0.5 rounded uppercase";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>tagEsg.innerText = "Compliant";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Update Charts</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (barChart &amp;&amp; radarChart) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Update Bar Chart</p>
+<p class="p1"><span class="Apple-converted-space">                </span>barChart.data.datasets[0].data = [rawEnergy, carbon, water];</p>
+<p class="p1"><span class="Apple-converted-space">                </span>barChart.update();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Update Radar Chart (Normalized 0-100)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const normEnergy = Math.min((rawEnergy / 1000) * 100, 100);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const normCarbon = Math.min((carbon / 500) * 100, 100);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const normWater = Math.min((water / 600) * 100, 100);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Scale normalized against 100B (100,000M)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const normScale = Math.min((state.params / 10000) * 100, 100);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>radarChart.data.datasets[0].data = [normEnergy, normCarbon, normWater, normScale];</p>
+<p class="p1"><span class="Apple-converted-space">                </span>radarChart.update();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- WIZARD LOGIC ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>window.toggleModal = function(modalID){</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById(modalID).classList.toggle("opacity-0");</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById(modalID).classList.toggle("pointer-events-none");</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.body.classList.toggle("modal-active");</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>window.selectOption = function(cat, val, el) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Set state</p>
+<p class="p1"><span class="Apple-converted-space">            </span>wizardState[cat] = val;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Visual feedback</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const siblings = el.parentElement.children;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>for (let i = 0; i &lt; siblings.length; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>siblings[i].classList.remove('selected', 'border-indigo-500', 'bg-indigo-50');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>el.classList.add('selected', 'border-indigo-500', 'bg-indigo-50');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>window.applyWizard = function() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Defaults</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let newParams = 7000;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let newDuty = 10000;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 1. Function Logic (Sets Base Scale)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (wizardState.func === 'imaging') newParams = 200; // CNN Scale</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (wizardState.func === 'doc') newParams = 500; // BERT/NLP Scale</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (wizardState.func === 'gen') newParams = 7000; // LLM Scale</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 2. Type Logic (Multiplier)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (wizardState.type === 'foundation') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (wizardState.func === 'imaging') newParams = 600; // e.g. SAM</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (wizardState.func === 'doc') newParams = 7000; // e.g. Ambient LLM</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (wizardState.func === 'gen') newParams = 70000; // e.g. GPT-4</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 3. Scale Logic (Sets Duty Cycle)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (wizardState.scale === 'dept') newDuty = 5000;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (wizardState.scale === 'ent') newDuty = 100000;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Apply</p>
+<p class="p1"><span class="Apple-converted-space">            </span>state.params = newParams;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>state.dutyCycle = newDuty;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Update UI</p>
+<p class="p1"><span class="Apple-converted-space">            </span>els.paramSlider.value = newParams;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>els.paramLabel.innerText = formatParams(newParams);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>els.dutySlider.value = newDuty;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>els.dutyLabel.innerText = newDuty.toLocaleString();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>els.modelSelect.value = 'Custom';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Close &amp; Recalculate</p>
+<p class="p1"><span class="Apple-converted-space">            </span>toggleModal('wizardModal');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>calculate();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Event Listeners</p>
+<p class="p1"><span class="Apple-converted-space">        </span>els.paramSlider.addEventListener('input', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>state.params = parseInt(e.target.value);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>els.paramLabel.innerText = formatParams(state.params);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>calculate();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>els.dutySlider.addEventListener('input', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>state.dutyCycle = parseInt(e.target.value);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>els.dutyLabel.innerText = state.dutyCycle.toLocaleString();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>calculate();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>els.modelSelect.addEventListener('change', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const model = e.target.value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Presets based on approximate model sizes</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (model === 'VizAI') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>state.params = 200; // ~200M (CNN based)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else if (model === 'NuanceDAX') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>state.params = 7000; // ~7B (Ambient)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else if (model === 'NuancePS') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>state.params = 500; // ~500M (NLP)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else if (model === 'NuanceDragon') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>state.params = 7000; // ~7B (DAX Copilot)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else if (model === 'Fluency') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>state.params = 500; // ~500M (NLP/Speech)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else if (model === 'RadAI') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>state.params = 7000; // ~7B (GenAI)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>els.paramSlider.value = state.params;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>els.paramLabel.innerText = formatParams(state.params);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>calculate();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// PUE Button Logic</p>
+<p class="p1"><span class="Apple-converted-space">        </span>window.updatePUE = function(val, btn) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>state.pue = val;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Reset styles</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const btns = document.querySelectorAll('.pue-btn');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>btns.forEach(b =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>b.className = "pue-btn py-2 px-2 rounded-lg border border-gray-200 text-xs font-bold text-gray-500 hover:bg-gray-50 transition-colors";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Set active style</p>
+<p class="p1"><span class="Apple-converted-space">            </span>btn.className = "pue-btn py-2 px-2 rounded-lg border border-transparent bg-indigo-600 text-white text-xs font-bold shadow-md ring-2 ring-indigo-100 transition-colors";</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>calculate();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Init</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.addEventListener('DOMContentLoaded', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>initCharts();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Trigger initial calculation with default label format</p>
+<p class="p1"><span class="Apple-converted-space">            </span>els.paramLabel.innerText = formatParams(state.params);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>calculate();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
